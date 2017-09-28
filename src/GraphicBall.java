@@ -2,7 +2,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.util.ArrayList;
 
-public class GraphicBall implements Runnable{
+public class GraphicBall implements Runnable {
 	final int IMMUNITY_FRAMES = 10;
 
 	private boolean isRunning;
@@ -17,7 +17,6 @@ public class GraphicBall implements Runnable{
 
 	private ArrayList<GraphicBall> ballsImmune; 
 	private ArrayList<Integer> framesSinceHit;
-
 	private Thread ballThread;
 
 	public GraphicBall(double x, double y) {
@@ -42,20 +41,25 @@ public class GraphicBall implements Runnable{
 		ballThread.start();
 	}
 
-	public Vector getVector() { return vector; }
-	public double getX() { return x; }
-	public double getY() { return y; }
+	public Vector getVector() {
+		return vector;
+	}
+	
+	public double getX() {
+		return x;
+	}
+	
+	public double getY() {
+		return y;
+	}
 
 	//Checks if a ball is colliding with another ball
-	public boolean detectBallCollision (GraphicBall otherBall)
-	{
+	public boolean detectBallCollision (GraphicBall otherBall) {
 		if (this != otherBall) {
 			double xDist = x - otherBall.getX();
 			double yDist = y - otherBall.getY();
 			double distance = Math.sqrt( Math.pow(xDist, 2) + Math.pow(yDist, 2)); //calculate the distance between the balls
-
-			if (distance < radius * 2 )
-			{
+			if (distance < radius * 2 ) {
 				return true;
 			}
 		}
@@ -63,8 +67,7 @@ public class GraphicBall implements Runnable{
 	}
 
 	//Changes the ball's direction based on the angle of the surface it hits
-	public void collide(Vector v)
-	{
+	public void collide(Vector v) {
 		//get the ball's current angle
 		double ballAngle = vector.getAngle();
 
@@ -77,10 +80,8 @@ public class GraphicBall implements Runnable{
 		//get the angle of reflection
 		double reflection = surfaceAngle - angleBetween;
 
-
 		xSpeed = speed * Math.cos( Math.toRadians(reflection) );
 		ySpeed = speed * Math.sin( Math.toRadians(reflection) );
-
 		vector.setDirection(xSpeed, ySpeed);
 	}
 
@@ -89,7 +90,6 @@ public class GraphicBall implements Runnable{
 		if (!ballsImmune.contains(otherBall)) {
 			framesSinceHit.add(0);
 			ballsImmune.add(otherBall);
-
 			Vector v = otherBall.getVector();
 			//get the ball's current angle
 			double ballAngle = vector.getAngle();
@@ -103,9 +103,8 @@ public class GraphicBall implements Runnable{
 			//get the angle of reflection
 			double reflection = surfaceAngle - angleBetween;
 
-			xSpeed = speed * Math.cos( Math.toRadians(reflection) );
-			ySpeed = speed * Math.sin( Math.toRadians(reflection) );
-
+			xSpeed = speed * Math.cos(Math.toRadians(reflection));
+			ySpeed = speed * Math.sin(Math.toRadians(reflection));
 			vector.setDirection(xSpeed, ySpeed);
 		}
 	}
@@ -124,15 +123,12 @@ public class GraphicBall implements Runnable{
 		if (x > 490 && xSpeed > 0) {
 			collide(new Vector (0,1));
 		}
-
 		if (x < 0 && xSpeed < 0) {
 			collide(new Vector (0,1));
 		}
-
 		if (y < 0  && ySpeed < 0) {
 			collide(new Vector (1,0));
 		}
-
 		if (y > 490 && ySpeed> 0) {
 			collide (new Vector (1,0));
 		}
@@ -149,7 +145,6 @@ public class GraphicBall implements Runnable{
 				framesSinceHit.set(i, framesSinceHit.get(i) + 1);
 			}
 		}
-
 		detectWallCollision();
 		x += xSpeed;
 		y += ySpeed;
@@ -157,9 +152,7 @@ public class GraphicBall implements Runnable{
 
 	@Override
 	public void run() {
-
-		while (isRunning)
-		{
+		while (isRunning) {
 			update();
 			try {
 				Thread.sleep(1000/60);

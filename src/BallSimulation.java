@@ -23,7 +23,6 @@ public class BallSimulation extends JPanel implements Runnable, MouseListener {
 		animation.start();
 	}
 
-
 	//paints all the balls in the array
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
