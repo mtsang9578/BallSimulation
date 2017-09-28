@@ -8,15 +8,14 @@ import javax.swing.JApplet;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-public class BallSimulation extends JPanel implements Runnable, MouseListener{
+public class BallSimulation extends JPanel implements Runnable, MouseListener {
 
-	boolean running = true;
-	Thread animation;
-	ArrayList<GraphicBall> balls;
+	private boolean running = true;
+	private Thread animation;
+	private ArrayList<GraphicBall> balls;
 
 	//Constructor
-	public BallSimulation()
-	{
+	public BallSimulation() {
 		setSize(500, 550);
 
 		balls = new ArrayList<GraphicBall> ();
@@ -26,14 +25,11 @@ public class BallSimulation extends JPanel implements Runnable, MouseListener{
 
 
 	//paints all the balls in the array
-	public void paintComponent(Graphics g)
-	{
+	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-
 		for (int i=0; i<balls.size(); i++) {
 			balls.get(i).draw(g);
 		}
-
 		for (int i=0; i<balls.size(); i++) {
 			for (int j=0; j<balls.size(); j++) {
 				if (balls.get(i).detectBallCollision(balls.get(j))) {
@@ -49,7 +45,7 @@ public class BallSimulation extends JPanel implements Runnable, MouseListener{
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
-		while(true){
+		while(true) {
 			repaint();
 			try {
 				Thread.sleep(1000/60);
@@ -58,7 +54,6 @@ public class BallSimulation extends JPanel implements Runnable, MouseListener{
 				e.printStackTrace();
 			}
 		}
-
 	}
 
 	@Override
@@ -77,18 +72,14 @@ public class BallSimulation extends JPanel implements Runnable, MouseListener{
 
 
 	//Main method for instantiating simulation
-	public static void main(String args[])
-	{
+	public static void main(String args[]) {
 		JFrame frame = new JFrame();
 		frame.setSize(500,550);
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setResizable(false);
-
 		BallSimulation simulation = new BallSimulation();
 		frame.add(simulation);
-
 		frame.addMouseListener(simulation);
 	}
-
 }
