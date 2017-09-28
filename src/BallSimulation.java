@@ -17,7 +17,6 @@ public class BallSimulation extends JPanel implements Runnable, MouseListener {
 	//Constructor
 	public BallSimulation() {
 		setSize(500, 550);
-
 		balls = new ArrayList<GraphicBall> ();
 		animation = new Thread(this);
 		animation.start();

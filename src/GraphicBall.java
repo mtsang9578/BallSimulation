@@ -18,7 +18,8 @@ public class GraphicBall implements Runnable {
 	private ArrayList<GraphicBall> ballsImmune; 
 	private ArrayList<Integer> framesSinceHit;
 	private Thread ballThread;
-
+	
+	//Constructs a ball at a given location
 	public GraphicBall(double x, double y) {
 		isRunning = true;
 		collided = false;
@@ -41,19 +42,22 @@ public class GraphicBall implements Runnable {
 		ballThread.start();
 	}
 
+	//Return the vector of the ball's motion
 	public Vector getVector() {
 		return vector;
 	}
 	
+	//Return the ball's x coordinate
 	public double getX() {
 		return x;
 	}
 	
+	//Return the ball's y coordinate
 	public double getY() {
 		return y;
 	}
 
-	//Checks if a ball is colliding with another ball
+	//Check if a ball is colliding with another ball
 	public boolean detectBallCollision (GraphicBall otherBall) {
 		if (this != otherBall) {
 			double xDist = x - otherBall.getX();
@@ -66,7 +70,7 @@ public class GraphicBall implements Runnable {
 		return false;
 	}
 
-	//Changes the ball's direction based on the angle of the surface it hits
+	//Change the ball's direction based on the angle of the surface it hits
 	public void collide(Vector v) {
 		//get the ball's current angle
 		double ballAngle = vector.getAngle();
@@ -115,7 +119,6 @@ public class GraphicBall implements Runnable {
 		g.fillOval((int) x, 505, radius * 2 , radius);
 		g.setColor(Color.blue);
 		g.fillOval((int) x, (int) y, radius * 2, radius * 2);
-
 	}
 
 	//Handles collisions with the wall
@@ -134,6 +137,7 @@ public class GraphicBall implements Runnable {
 		}
 	}
 
+	//Calculations Handled by the thread
 	public void update() { 
 		//Updates the immunity list so that it cannot hit the same ball within a certain number of frames
 		for (int i = 0; i < ballsImmune.size(); i++) {
@@ -150,6 +154,7 @@ public class GraphicBall implements Runnable {
 		y += ySpeed;
 	}
 
+	//Implemented method
 	@Override
 	public void run() {
 		while (isRunning) {
